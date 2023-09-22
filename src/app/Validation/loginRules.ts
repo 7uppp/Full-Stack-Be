@@ -1,5 +1,6 @@
-import { check } from 'express-validator';
+import {check} from 'express-validator';
 
 export const LoginRules = [
-    check('username', 'Username must not Empty').notEmpty(),
+    check('email', 'Email must not Empty').notEmpty(),
+    check('password', 'Password must not Empty').notEmpty(),
 ]

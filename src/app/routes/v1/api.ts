@@ -1,15 +1,26 @@
 import express from 'express';
+
 const router = express.Router();
 import * as registerController from '../../controllers/registerController';
 import * as registerValidation from "../../Validation/registerRules";
-import * as refreshToken from "../../controllers/refreshToken";
+import * as loginController from '../../controllers/loginController';
+import * as loginValidation from '../../Validation/loginRules';
+import authMiddleware from "../../middleware/authMiddleware";
 
+const subRouter = express.Router();
 
+// test subRouter
+subRouter.get('/test', (req, res) => {
+    return res.status(200).json({message: 'test success'})
+})
 router.post('/register', registerValidation.RegisterRules, registerController.register);
 
+router.post('/login', loginValidation.LoginRules, loginController.login);
 
-router.get('/login',
-);
+// router.post('/refresh-token',)
 
-router.post('/refresh-token', refreshToken.refreshTokenEndpoint)
+
+//**************All routers which need authMiddleware **************//
+router.use('/auth', authMiddleware, subRouter);
+
 export default router;
