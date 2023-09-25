@@ -6,6 +6,7 @@ import * as registerValidation from "../../Validation/registerRules";
 import * as loginController from '../../controllers/loginController';
 import * as loginValidation from '../../Validation/loginRules';
 import authMiddleware from "../../middleware/authMiddleware";
+import * as refreshTokenController from "../../controllers/refreshTokenController";
 
 const subRouter = express.Router();
 
@@ -17,7 +18,7 @@ router.post('/register', registerValidation.RegisterRules, registerController.re
 
 router.post('/login', loginValidation.LoginRules, loginController.login);
 
-// router.post('/refresh-token',)
+router.post('/refresh-token', refreshTokenController.refreshToken)
 
 
 //**************All routers which need authMiddleware **************//
