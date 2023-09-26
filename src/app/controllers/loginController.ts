@@ -30,7 +30,9 @@ export const login = async (req: Request, res: Response) => {
 
             const hashedPassword = results[0].password
             const username = results[0].username
+            // console.log(results)
             const userId = results[0].id
+            // console.log(userId)
             const isMatch = await bcrypt.compare(password, hashedPassword)
             if (!isMatch) {
                 return res.status(401).json({message: 'Password is incorrect'})
@@ -47,7 +49,8 @@ export const login = async (req: Request, res: Response) => {
                         msg: 'log in success',
                         username: username,
                         accessToken: accessToken,
-                        refreshToken: refreshToken
+                        refreshToken: refreshToken,
+                        userId: userId
                     })
                 })
             })

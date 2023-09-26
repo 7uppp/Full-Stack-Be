@@ -13,7 +13,9 @@ import * as commentController from '../../controllers/addCommentController';
 import * as fetchPostAllCommentController from '../../controllers/fetchPostAllCommentController';
 import * as createPostController from '../../controllers/createPostController';
 import * as createPostValidation from '../../Validation/postsRules';
+import * as deleteCommentController from '../../controllers/deleteCommentController';
 import * as deletePostController from '../../controllers/deletePostController';
+
 
 const subRouter = express.Router();
 
@@ -32,6 +34,7 @@ router.post('/refresh-token', refreshTokenController.refreshToken)
 
 router.use('/auth', authMiddleware, subRouter);
 
+//router for create post
 subRouter.post('/posts', createPostValidation.PostRules, createPostController.createPostController);
 
 //router for add comment for a post
@@ -41,7 +44,10 @@ subRouter.post('/posts/:postId/comments', commentValidation.CommentRules, commen
 subRouter.get('/posts/:postId/comments', getOnePostValidation.GetOnePost, fetchPostAllCommentController.fetchCommentsForPost);
 
 //router for delete one comment
-subRouter.delete('/comments/:commentId/', deletePostController.deletePost);
+subRouter.delete('/comments/:commentId/', deleteCommentController.deleteComment);
+
+//router for delete one post
+subRouter.delete('/posts/:postId/', deletePostController.deletePost);
 
 
 export default router;

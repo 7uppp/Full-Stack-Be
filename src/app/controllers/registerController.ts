@@ -4,10 +4,7 @@ import {RowDataPacket} from 'mysql2'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET as string
-const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET as string
-const ACCESS_TOKEN_LIFETIME = process.env.ACCESS_TOKEN_EXPIRES_IN
-const REFRESH_TOKEN_LIFETIME = process.env.REFRESH_TOKEN_EXPIRES_IN
+
 const SALT_ROUNDS = 10 //
 
 export const register = async (req: Request, res: Response) => {
