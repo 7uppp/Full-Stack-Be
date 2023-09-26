@@ -24,7 +24,7 @@ const authMiddleware = (req: RequestWithUserId, res: Response, next: NextFunctio
 
                 // Attach userId to the request object for downstream middleware/route handlers
                 req.userId = decoded.userId;
-                console.log("req.userId:", decoded)
+                // console.log("req.userId:", decoded)
 
                 next();
             });

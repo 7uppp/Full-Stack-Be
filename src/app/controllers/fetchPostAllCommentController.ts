@@ -1,8 +1,14 @@
 import {Response, Request} from 'express';
 import dbConnection from '../../loader/dbConnect';
 import {RowDataPacket} from "mysql2";
+import {validationResult} from "express-validator";
 
-export const fetchCommentsForPost = (req: Request, res: Response) => {
+export const fetchCommentsForPost = async (req: Request, res: Response) => {
+    const errors = validationResult(req); //
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({errors: errors.array()});
+    }
     // get postId from req.params
     const postId = req.params.postId;
     // console.log("postId:", postId)

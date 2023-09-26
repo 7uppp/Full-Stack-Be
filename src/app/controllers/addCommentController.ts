@@ -8,6 +8,11 @@ interface CommentRequestBody {
 }
 
 export const addComment = (req: Request & { userId?: string }, res: Response) => {
+    const errors = validationResult(req); //
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({errors: errors.array()});
+    }
     //check is post exists
     const postId: number = parseInt(req.params.postId, 10);
 
@@ -53,6 +58,4 @@ export const addComment = (req: Request & { userId?: string }, res: Response) =>
             });
         }
     );
-
-
 }

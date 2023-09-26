@@ -3,7 +3,7 @@ import dbConnection from '../../loader/dbConnect';
 import {RowDataPacket} from "mysql2";
 
 
-export const deletePost = (req: Request & { userId?: string }, res: Response) => {
+export const deletePost = async (req: Request & { userId?: string }, res: Response) => {
 
     const userId = req.userId;
     const postId = parseInt(req.params.postId, 10);

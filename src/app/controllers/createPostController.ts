@@ -1,8 +1,14 @@
 import {Request, Response} from 'express';
 import dbConnection from '../../loader/dbConnect';
 import {RowDataPacket} from "mysql2";
+import {validationResult} from "express-validator";
 
-export const createPostController = (req: Request & { userId?: string }, res: Response) => {
+export const createPostController = async (req: Request & { userId?: string }, res: Response) => {
+    const errors = validationResult(req); //
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({errors: errors.array()});
+    }
     const userId = req.userId; // userId is attached to req object by authMiddleware
     // console.log("userId:", userId);
     const {title, content} = req.body;

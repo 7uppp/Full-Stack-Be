@@ -7,7 +7,7 @@ interface RequestWithUserId extends Request {
     userId?: string;
 }
 
-export const deleteComment = (req: RequestWithUserId, res: Response) => {
+export const deleteComment = async (req: RequestWithUserId, res: Response) => {
 
     const userId = req.userId; // userId is attached to req object by authMiddleware
     const commentId = parseInt(req.params.commentId, 10);
@@ -33,16 +33,17 @@ export const deleteComment = (req: RequestWithUserId, res: Response) => {
             if (userId !== commentOwnerId) {
                 return res.status(401).json({message: 'You are not the owner of this post'});
             }
+            const deletePostQuery = `DELETE FROM comments WHERE comment_id = ?`;
+
+            dbConnection.query(deletePostQuery, [commentId], (err, results: RowDataPacket[]) => {
+                if (err) {
+                    console.error("Database Error:", err);
+                    return res.status(500).json({message: 'Internal server error'});
+                }
+                return res.status(200).json({message: 'Delete post success', data: results});
+            });
         }
     );
 
-    const deletePostQuery = `DELETE FROM comments WHERE comment_id = ?`;
 
-    dbConnection.query(deletePostQuery, [commentId], (err, results: RowDataPacket[]) => {
-        if (err) {
-            console.error("Database Error:", err);
-            return res.status(500).json({message: 'Internal server error'});
-        }
-        return res.status(200).json({message: 'Delete post success', data: results});
-    });
 }
