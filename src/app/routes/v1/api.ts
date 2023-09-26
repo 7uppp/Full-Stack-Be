@@ -11,15 +11,13 @@ import authMiddleware from '../../middleware/authMiddleware';
 import * as refreshTokenController from '../../controllers/refreshTokenController';
 import * as commentController from '../../controllers/addCommentController';
 import * as fetchPostAllCommentController from '../../controllers/fetchPostAllCommentController';
-
+import * as createPostController from '../../controllers/createPostController';
+import * as createPostValidation from '../../Validation/postsRules';
+import * as deletePostController from '../../controllers/deletePostController';
 
 const subRouter = express.Router();
 
-// test subRouter
-subRouter.get('/test', (req, res) => {
-    return res.status(200).json({message: 'test success'})
-})
-
+//**************All routers which don't need authMiddleware **************//
 // router for register
 router.post('/register', registerValidation.RegisterRules, registerController.register);
 
@@ -32,15 +30,18 @@ router.post('/refresh-token', refreshTokenController.refreshToken)
 
 //**************All routers which need authMiddleware **************//
 
-//test authMiddleware
 router.use('/auth', authMiddleware, subRouter);
 
-//router for add comment for a post
-router.post('/posts/:postId/comments', commentValidation.CommentRules, authMiddleware, commentController.addComment);
+subRouter.post('/posts', createPostValidation.PostRules, createPostController.createPostController);
 
+//router for add comment for a post
+subRouter.post('/posts/:postId/comments', commentValidation.CommentRules, commentController.addComment);
 
 //router for fetch all comments for a post
-router.get('/auth/posts/:postId/comments', getOnePostValidation.GetOnePost, authMiddleware, fetchPostAllCommentController.fetchCommentsForPost);
+subRouter.get('/posts/:postId/comments', getOnePostValidation.GetOnePost, fetchPostAllCommentController.fetchCommentsForPost);
+
+//router for delete one comment
+subRouter.delete('/comments/:commentId/', deletePostController.deletePost);
 
 
 export default router;

@@ -67,7 +67,11 @@ export const register = async (req: Request, res: Response) => {
                 if (err) {
                     return res.status(500).json({error: err})
                 }
-                res.json({message: 'Register success'})
+                res.json({
+                    message: 'Register success',
+                    accessToken: result.accessToken,
+                    refreshToken: result.refreshToken
+                })
             }
         )
     } catch (error) {

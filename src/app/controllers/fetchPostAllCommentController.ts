@@ -5,6 +5,7 @@ import {RowDataPacket} from "mysql2";
 export const fetchCommentsForPost = (req: Request, res: Response) => {
     // get postId from req.params
     const postId = req.params.postId;
+    // console.log("postId:", postId)
 
     // query database for comments for this post
     const getCommentsForPost = `SELECT * FROM comments WHERE post_id = ?`;
