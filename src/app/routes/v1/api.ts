@@ -17,7 +17,6 @@ import * as createPostValidation from '../../Validation/postsRules';
 import * as deleteCommentController from '../../controllers/deleteCommentController';
 import * as deletePostController from '../../controllers/deletePostController';
 import * as fetchLatestTenPostsController from '../../controllers/fetchLatestTenPostsController';
-import * as verifyTokenController from "../../controllers/verifyTokenController";
 
 
 //**************All routers which don't need authMiddleware **************//
@@ -30,7 +29,6 @@ router.post('/login', loginValidation.LoginRules, loginController.login);
 // router for refresh token
 router.post('/refresh-token', refreshTokenController.refreshToken);
 
-router.post('/verifyToken', verifyTokenController.verifyToken);
 
 //**************All routers which need authMiddleware **************//
 
