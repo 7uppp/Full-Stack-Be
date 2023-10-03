@@ -1,6 +1,7 @@
 import express from 'express';
 
 const router = express.Router();
+const subRouter = express.Router();
 import * as registerController from '../../controllers/registerController';
 import * as registerValidation from "../../Validation/registerRules";
 import * as loginController from '../../controllers/loginController';
@@ -16,20 +17,22 @@ import * as createPostValidation from '../../Validation/postsRules';
 import * as deleteCommentController from '../../controllers/deleteCommentController';
 import * as deletePostController from '../../controllers/deletePostController';
 import * as fetchLatestTenPostsController from '../../controllers/fetchLatestTenPostsController';
+// import * as verifyTokenController from "../../controllers/verifyTokenController";
 
-
-const subRouter = express.Router();
 
 //**************All routers which don't need authMiddleware **************//
 // router for register
 router.post('/register', registerValidation.RegisterRules, registerController.register);
 
 // router for login
-router.post('/login', loginValidation.LoginRules, loginController.login);
+// router.post('/login', loginValidation.LoginRules, loginController.login);
 
 // router for refresh token
-router.post('/refresh-token', refreshTokenController.refreshToken)
+router.post('/refresh-token', refreshTokenController.refreshToken);
 
+// router.get('/verify', (req, res) => {
+//     return res.json({message: 'verify success'})
+// });
 
 //**************All routers which need authMiddleware **************//
 
