@@ -17,7 +17,7 @@ import * as createPostValidation from '../../Validation/postsRules';
 import * as deleteCommentController from '../../controllers/deleteCommentController';
 import * as deletePostController from '../../controllers/deletePostController';
 import * as fetchLatestTenPostsController from '../../controllers/fetchLatestTenPostsController';
-// import * as verifyTokenController from "../../controllers/verifyTokenController";
+import * as verifyTokenController from "../../controllers/verifyTokenController";
 
 
 //**************All routers which don't need authMiddleware **************//
@@ -25,14 +25,12 @@ import * as fetchLatestTenPostsController from '../../controllers/fetchLatestTen
 router.post('/register', registerValidation.RegisterRules, registerController.register);
 
 // router for login
-// router.post('/login', loginValidation.LoginRules, loginController.login);
+router.post('/login', loginValidation.LoginRules, loginController.login);
 
 // router for refresh token
 router.post('/refresh-token', refreshTokenController.refreshToken);
 
-// router.get('/verify', (req, res) => {
-//     return res.json({message: 'verify success'})
-// });
+router.post('/verifyToken', verifyTokenController.verifyToken);
 
 //**************All routers which need authMiddleware **************//
 
