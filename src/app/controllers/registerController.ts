@@ -4,7 +4,6 @@ import {RowDataPacket} from 'mysql2'
 import bcrypt from 'bcrypt'
 import {validationResult} from "express-validator";
 
-
 const SALT_ROUNDS = 10 //
 
 export const register = async (req: Request, res: Response) => {

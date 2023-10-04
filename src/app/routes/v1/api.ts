@@ -17,6 +17,7 @@ import * as createPostValidation from '../../Validation/postsRules';
 import * as deleteCommentController from '../../controllers/deleteCommentController';
 import * as deletePostController from '../../controllers/deletePostController';
 import * as fetchLatestTenPostsController from '../../controllers/fetchLatestTenPostsController';
+import * as getUserInfoController from '../../controllers/getUserInfoController';
 
 
 //**************All routers which don't need authMiddleware **************//
@@ -27,9 +28,9 @@ router.post('/register', registerValidation.RegisterRules, registerController.re
 router.post('/login', loginValidation.LoginRules, loginController.login);
 
 // router for refresh token
-router.post('/refresh-token', refreshTokenController.refreshToken);
+router.post('/refreshToken', refreshTokenController.refreshToken);
 
-
+router.post('/getUserInfo', getUserInfoController.getUserInfo);
 //**************All routers which need authMiddleware **************//
 
 router.use('/auth', authMiddleware, subRouter);
