@@ -1,7 +1,17 @@
 import { check } from 'express-validator';
 
 export const RegisterRules = [
-check('username').isLength({min:3, max: 50}).withMessage('Username must be between 3 and 20 characters'),
-check('email').isEmail().withMessage('Email is not valid'),
-check('password').isLength({min:6, max: 20}).withMessage('Password must be between 6 and 20 characters'),
+    check('username')
+        .isLength({ min: 3, max: 20 })
+        .isAlphanumeric()
+        .withMessage('3-20 characters, only letters and numbers'),
+
+    check('email').isEmail().withMessage('Email is not valid'),
+
+    check('password')
+        .isLength({ min: 8, max: 16 })
+        .matches(/[a-z]/)
+        .matches(/[A-Z]/)
+        .matches(/\d/)
+        .withMessage('Password need 8-16 characters, at least one upper & lowercase & a number'),
 ];
