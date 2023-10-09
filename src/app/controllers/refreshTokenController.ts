@@ -4,11 +4,9 @@ import {validationResult} from "express-validator";
 import config from '../../config';
 
 export const refreshToken = (req: Request, res: Response) => {
-    console.log(req.headers)
     const refreshToken = req.headers.refreshtoken as string;
-    const errors = validationResult(req); //
+    const errors = validationResult(req);
 
-    console.log(refreshToken)
     if (!errors.isEmpty()) {
         return res.status(400).json({errors: errors.array()});
     }

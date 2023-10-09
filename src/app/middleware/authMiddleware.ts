@@ -5,6 +5,7 @@ const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET as string;
 
 interface RequestWithUserId extends Request {
     userId?: string;
+    username?: string;
 }
 
 const authMiddleware = (req: RequestWithUserId, res: Response, next: NextFunction) => {
@@ -22,8 +23,11 @@ const authMiddleware = (req: RequestWithUserId, res: Response, next: NextFunctio
                 //check if authToken is valid
                 if (err) return res.status(401).send('invalid access token');
 
+
                 // Attach userId to the request object for downstream middleware/route handlers
                 req.userId = decoded.userId;
+                req.username = decoded.username;
+
                 // console.log("req.userId:", decoded)
 
                 next();

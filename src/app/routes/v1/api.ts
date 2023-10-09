@@ -27,6 +27,9 @@ router.post('/register', registerValidation.RegisterRules, registerController.re
 // router for login
 router.post('/login', loginValidation.LoginRules, loginController.login);
 
+//router for fetch latest 10 posts
+router.get('/posts', fetchLatestTenPostsController.fetchLatestTenPosts);
+
 // router for refresh token
 router.post('/refreshToken', refreshTokenController.refreshToken);
 
@@ -41,8 +44,7 @@ subRouter.post('/posts', createPostValidation.PostRules, createPostController.cr
 //router for add comment for a post
 subRouter.post('/posts/:postId/comments', commentValidation.CommentRules, commentController.addComment);
 
-//router for fetch latest 10 posts
-subRouter.get('/posts', fetchLatestTenPostsController.fetchLatestTenPosts);
+
 
 //router for fetch all comments for a post
 subRouter.get('/posts/:postId/comments', getOnePostValidation.GetOnePost, fetchPostAllCommentController.fetchCommentsForPost);

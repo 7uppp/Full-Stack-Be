@@ -3,6 +3,7 @@ import { check } from 'express-validator';
 export const RegisterRules = [
     check('username')
         .isLength({ min: 3, max: 20 })
+        .notEmpty()
         .isAlphanumeric()
         .withMessage('3-20 characters, only letters and numbers'),
 
