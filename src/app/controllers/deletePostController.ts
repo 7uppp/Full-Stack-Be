@@ -7,7 +7,7 @@ export const deletePost = async (req: Request & { userId?: string }, res: Respon
 
     const userId = req.userId;
     const postId = parseInt(req.params.postId, 10);
-    const getPostOwnerId = `SELECT userId FROM posts WHERE post_id = ?`;
+    const getPostOwnerId = `SELECT userId FROM posts WHERE postId = ?`;
 
     dbConnection.query(
         getPostOwnerId,
@@ -30,7 +30,7 @@ export const deletePost = async (req: Request & { userId?: string }, res: Respon
                 return res.status(401).json({message: 'You are not the owner of this post'});
             }
 
-            const deletePostQuery = `DELETE FROM posts WHERE post_id = ?`;
+            const deletePostQuery = `DELETE FROM posts WHERE postId = ?`;
             dbConnection.query(deletePostQuery, [postId], (err, results: RowDataPacket[]) => {
                     if (err) {
                         console.error("Database Error:", err);

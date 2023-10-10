@@ -3,7 +3,7 @@ import dbConnection from '../../loader/dbConnect';
 import {RowDataPacket} from "mysql2";
 import {validationResult} from "express-validator";
 
-export const fetchCommentsForPost = async (req: Request, res: Response) => {
+export const fetchAllCommentsForPost = async (req: Request, res: Response) => {
     const errors = validationResult(req); //
 
     if (!errors.isEmpty()) {
@@ -14,7 +14,7 @@ export const fetchCommentsForPost = async (req: Request, res: Response) => {
     // console.log("postId:", postId)
 
     // query database for comments for this post
-    const getCommentsForPost = `SELECT * FROM comments WHERE post_id = ?`;
+    const getCommentsForPost = `SELECT * FROM comments WHERE postId = ?`;
 
     dbConnection.query(getCommentsForPost, [postId], (err, results: RowDataPacket[]) => {
         if (err) {

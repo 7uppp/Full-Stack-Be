@@ -3,7 +3,7 @@ import dbConnection from '../../loader/dbConnect'
 import {RowDataPacket} from 'mysql2'
 import {validationResult} from "express-validator";
 
-export const fetchLatestTenPosts = async (req: Request, res: Response) => {
+export const fetchAllPosts = async (req: Request, res: Response) => {
     const errors = validationResult(req); //
 
     if (!errors.isEmpty()) {
@@ -20,8 +20,9 @@ export const fetchLatestTenPosts = async (req: Request, res: Response) => {
         if (results.length === 0) {
             return res.status(404).json({message: 'No posts found'});
         }
-
+        console.log(results)
         return res.status(200).json({message: 'Fetch posts success', data: results});
+
 
     });
 

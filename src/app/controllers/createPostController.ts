@@ -26,7 +26,7 @@ export const createPostController = async (req: Request & { userId?: string,user
     }
     const addPostQuery = `INSERT INTO posts (post, userId,userName) VALUES (?, ?,?)`;
 
-    dbConnection.query(addPostQuery, [post, userId,username], (err, results: RowDataPacket[]) => {
+    dbConnection.query(addPostQuery, [post,userId,username], (err, results: RowDataPacket[]) => {
         if (err) {
             console.error("Database Error:", err);
             return res.status(500).json({message: 'Internal server error'});

@@ -11,13 +11,14 @@ import * as getOnePostValidation from '../../Validation/getOnePost';
 import authMiddleware from '../../middleware/authMiddleware';
 import * as refreshTokenController from '../../controllers/refreshTokenController';
 import * as commentController from '../../controllers/addCommentController';
-import * as fetchPostAllCommentController from '../../controllers/fetchPostAllCommentController';
+import * as fetchAllPostsController from '../../controllers/fetchPostAllCommentController';
 import * as createPostController from '../../controllers/createPostController';
 import * as createPostValidation from '../../Validation/postsRules';
 import * as deleteCommentController from '../../controllers/deleteCommentController';
 import * as deletePostController from '../../controllers/deletePostController';
-import * as fetchLatestTenPostsController from '../../controllers/fetchLatestTenPostsController';
+import * as fetchLatestTenPostsController from '../../controllers/fetchAllPostsController';
 import * as getUserInfoController from '../../controllers/getUserInfoController';
+import {fetchAllCommentsForPost} from "../../controllers/fetchPostAllCommentController";
 
 
 //**************All routers which don't need authMiddleware **************//
@@ -28,7 +29,7 @@ router.post('/register', registerValidation.RegisterRules, registerController.re
 router.post('/login', loginValidation.LoginRules, loginController.login);
 
 //router for fetch latest 10 posts
-router.get('/posts', fetchLatestTenPostsController.fetchLatestTenPosts);
+router.get('/posts', fetchLatestTenPostsController.fetchAllPosts);
 
 // router for refresh token
 router.post('/refreshToken', refreshTokenController.refreshToken);
@@ -47,7 +48,7 @@ subRouter.post('/posts/:postId/comments', commentValidation.CommentRules, commen
 
 
 //router for fetch all comments for a post
-subRouter.get('/posts/:postId/comments', getOnePostValidation.GetOnePost, fetchPostAllCommentController.fetchCommentsForPost);
+subRouter.get('/posts/:postId/comments', getOnePostValidation.GetOnePost, fetchAllPostsController.fetchAllCommentsForPost);
 
 //router for delete one comment
 subRouter.delete('/comments/:commentId/', deleteCommentController.deleteComment);
