@@ -35,6 +35,9 @@ router.get('/posts', fetchLatestTenPostsController.fetchAllPosts);
 router.post('/refreshToken', refreshTokenController.refreshToken);
 
 router.post('/getUserInfo', getUserInfoController.getUserInfo);
+
+//router for fetch all comments for a post
+router.get('/posts/:postId/comments', getOnePostValidation.GetOnePost, fetchAllPostsController.fetchAllCommentsForPost);
 //**************All routers which need authMiddleware **************//
 
 router.use('/auth', authMiddleware, subRouter);
@@ -47,8 +50,7 @@ subRouter.post('/posts/:postId/comments', commentValidation.CommentRules, commen
 
 
 
-//router for fetch all comments for a post
-subRouter.get('/posts/:postId/comments', getOnePostValidation.GetOnePost, fetchAllPostsController.fetchAllCommentsForPost);
+
 
 //router for delete one comment
 subRouter.delete('/comments/:commentId/', deleteCommentController.deleteComment);

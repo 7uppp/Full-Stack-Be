@@ -20,7 +20,6 @@ export const fetchAllPosts = async (req: Request, res: Response) => {
         if (results.length === 0) {
             return res.status(404).json({message: 'No posts found'});
         }
-        console.log(results)
         return res.status(200).json({message: 'Fetch posts success', data: results});
 
 
