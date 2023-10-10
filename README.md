@@ -4,7 +4,7 @@ PawMingle is a social platform inspired by the style of Twitter, designed specif
 
 ## Tech Stack
 
-- **Backend**: Node.js v18+ , espress v4+
+- **Backend**: Node.js v18+ , Express v4+
 - **Runtime:**: Node.js
 - **Framework**: Express
 - **Language**: TypeScript
