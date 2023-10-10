@@ -44,7 +44,7 @@ export const addComment = (req: Request & { userId?: string }, res: Response) =>
                 return res.status(400).json({message: 'Invalid post ID'});
             }
 
-            const addCommentQuery = `INSERT INTO comments (userId, content, postId) VALUES (?, ?, ?)`;
+            const addCommentQuery = `INSERT INTO comments (userId, comment, postId) VALUES (?, ?, ?)`;
 
             dbConnection.query(addCommentQuery, [userId, comment, postId], (err, results: RowDataPacket[]) => {
                 if (err) {

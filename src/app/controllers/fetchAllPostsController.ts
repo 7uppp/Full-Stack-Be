@@ -10,7 +10,7 @@ export const fetchAllPosts = async (req: Request, res: Response) => {
         return res.status(400).json({errors: errors.array()});
     }
     // query database for comments for this post
-    const getLatestTenPosts = `SELECT * FROM posts ORDER BY createAt DESC LIMIT 10`;
+    const getLatestTenPosts = `SELECT * FROM posts ORDER BY createAt DESC`;
 
     dbConnection.query(getLatestTenPosts, (err, results: RowDataPacket[]) => {
         if (err) {

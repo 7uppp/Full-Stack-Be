@@ -11,7 +11,7 @@ export const deleteComment = async (req: RequestWithUserId, res: Response) => {
 
     const userId = req.userId; // userId is attached to req object by authMiddleware
     const commentId = parseInt(req.params.commentId, 10);
-    const getCommentOwnerId = `SELECT userId FROM comments WHERE comment_id = ?`;
+    const getCommentOwnerId = `SELECT userId FROM comments WHERE commentId = ?`;
 
     dbConnection.query(
         getCommentOwnerId,
@@ -27,13 +27,12 @@ export const deleteComment = async (req: RequestWithUserId, res: Response) => {
             // console.log("results:", results)
             const commentOwnerId = results[0]?.userId;
 
-            // console.log("commentOwnerId:", commentOwnerId)
-            // console.log("userId:", userId)
+
 
             if (userId !== commentOwnerId) {
                 return res.status(401).json({message: 'You are not the owner of this post'});
             }
-            const deletePostQuery = `DELETE FROM comments WHERE comment_id = ?`;
+            const deletePostQuery = `DELETE FROM comments WHERE commentId = ?`;
 
             dbConnection.query(deletePostQuery, [commentId], (err, results: RowDataPacket[]) => {
                 if (err) {
