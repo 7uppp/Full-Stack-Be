@@ -1,5 +1,4 @@
 import express from 'express';
-
 const router = express.Router();
 const subRouter = express.Router();
 import * as registerController from '../../controllers/registerController';
@@ -18,7 +17,9 @@ import * as deleteCommentController from '../../controllers/deleteCommentControl
 import * as deletePostController from '../../controllers/deletePostController';
 import * as fetchLatestTenPostsController from '../../controllers/fetchAllPostsController';
 import * as getUserInfoController from '../../controllers/getUserInfoController';
-import {fetchAllCommentsForPost} from "../../controllers/fetchPostAllCommentController";
+import * as uploadUserAvatarMiddleware from '../../controllers/uploadUserAvatarMiddleware';
+import * as userOperateController from '../../controllers/userOperateController';
+
 
 
 //**************All routers which don't need authMiddleware **************//
@@ -48,15 +49,14 @@ subRouter.post('/posts', createPostValidation.PostRules, createPostController.cr
 //router for add comment for a post
 subRouter.post('/posts/:postId/comments', commentValidation.CommentRules, commentController.addComment);
 
-
-
-
-
 //router for delete one comment
 subRouter.delete('/comments/:commentId/', deleteCommentController.deleteComment);
 
 //router for delete one post
 subRouter.delete('/posts/:postId/', deletePostController.deletePost);
 
+//router for upload user avatar
+
+subRouter.post('/upload/avatar/:userId',uploadUserAvatarMiddleware.upload.single('avatar'),userOperateController.handleUpload);
 
 export default router;

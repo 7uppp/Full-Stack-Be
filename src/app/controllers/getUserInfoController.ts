@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import {Request, Response, NextFunction} from 'express';
 import {refreshToken} from "./refreshTokenController";
-import config from '../../config';
+import config from '../config/config';
 
 
 export const getUserInfo = (req: Request, res: Response) => {

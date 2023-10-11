@@ -1,7 +1,7 @@
 import {Response, Request} from 'express';
 import jwt from 'jsonwebtoken';
 import {validationResult} from "express-validator";
-import config from '../../config';
+import config from '../config/config';
 
 export const refreshToken = (req: Request, res: Response) => {
     const refreshToken = req.headers.refreshtoken as string;

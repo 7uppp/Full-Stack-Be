@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 const config = {
     DB_PASSWORD: process.env.DB_PASSWORD || '',
     JWT_SECRET: process.env.JWT_SECRET || '',

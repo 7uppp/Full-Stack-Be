@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import {RowDataPacket} from "mysql2";
 import {validationResult} from "express-validator";
-import config from '../../config';
+import config from '../config/config';
 
 
 const ACCESS_TOKEN_LIFETIME = config.ACCESS_TOKEN_EXPIRES_IN
