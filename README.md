@@ -17,6 +17,7 @@ Ensure you have the following prerequisites to set up the development environmen
 
 - Node.js v18+
 - npm/yarn
+- port:8070
 
 ### Development Status 🚧
 
