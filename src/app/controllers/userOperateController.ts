@@ -36,9 +36,8 @@ const handleUpload = async (req: MulterRequest, res: Response) => {
     }
 
     const userId = parseInt(req.userId, 10);
-
     const fetchAvatarQuery = `SELECT avatarUrl FROM userinfo WHERE id = ?`;
-    const addAvatarQuery = `UPDATE userinfo SET avatarUrl = ? WHERE id = ?`;
+    const updateAvatarQuery = `UPDATE userinfo SET avatarUrl = ? WHERE id = ?`;
 
     let oldAvatarKey: string | null = null;
 
@@ -46,16 +45,16 @@ const handleUpload = async (req: MulterRequest, res: Response) => {
         // Fetch old avatar key
         const results = await queryAsync(fetchAvatarQuery, [userId]);
         oldAvatarKey = results[0]?.avatarUrl || null;
-        console.log('oldAvatarKey:', oldAvatarKey);
+        // console.log('oldAvatarKey:', oldAvatarKey);
 
         // Update with new avatar
-        await queryAsync(addAvatarQuery, [req.file.location, userId]);
+        await queryAsync(updateAvatarQuery, [req.file.location, userId]);
         if (oldAvatarKey) {
             const urlObj = new URL(decodeURIComponent(oldAvatarKey));  // decodeURIComponent() is needed to decode the URL-encoded space character
             const pathName = urlObj.pathname;  // get the path name from the URL
             const s3Key = pathName.substring(1);  // remove the leading slash from the path name
 
-            console.log('Extracted S3 Key:', s3Key);  //
+            // console.log('Extracted S3 Key:', s3Key);  //
 
             await deleteFromS3(s3Key);
         }

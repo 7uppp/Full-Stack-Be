@@ -1,5 +1,4 @@
 import {S3Client, S3ClientConfig, GetObjectCommand, DeleteObjectCommand} from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import multerS3 from 'multer-s3';
 import multer from 'multer';
 import dotenv from 'dotenv';
@@ -31,7 +30,7 @@ const upload = multer({
             cb(null, { fieldName: file.fieldname });
         },
         key: function (req: any, file: any, cb: any) {
-            cb(null, Date.now().toString() + file.originalname);
+            cb(null, req.username + file.originalname);
         },
     }),
     limits: {
@@ -49,21 +48,7 @@ const upload = multer({
     }
 });
 
-async function generateSignedUrl(bucket: string, key: string): Promise<string> {
-    try {
-        const getObjectParams = {
-            Bucket: bucket,
-            Key: key,
-        };
 
-        return await getSignedUrl(s3Client, new GetObjectCommand(getObjectParams), {
-            expiresIn: 3600, // This URL will be valid for 1 hour
-        });
-    } catch (error) {
-        console.error("Error generating signed URL:", error);
-        throw new Error("Could not generate signed URL.");
-    }
-}
 async function deleteFromS3(key: string) {
     const deleteParams = {
         Bucket: 'pawmingleuseravatar',
@@ -76,4 +61,4 @@ async function deleteFromS3(key: string) {
         console.error('There was an error deleting the old avatar:', error);
     }
 }
-export { upload, generateSignedUrl,deleteFromS3 };
+export { upload,deleteFromS3 };
