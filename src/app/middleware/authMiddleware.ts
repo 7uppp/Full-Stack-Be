@@ -6,7 +6,6 @@ const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET as string;
 interface RequestWithUserId extends Request {
     userId?: string;
     username?: string;
-    avatarUrl?: string;
 }
 
 const authMiddleware = (req: RequestWithUserId, res: Response, next: NextFunction) => {
@@ -28,10 +27,6 @@ const authMiddleware = (req: RequestWithUserId, res: Response, next: NextFunctio
                 // Attach userId to the request object for downstream middleware/route handlers
                 req.userId = decoded.userId;
                 req.username = decoded.username;
-                req.avatarUrl = decoded.avatarUrl;
-
-                // console.log("req.userId:", decoded)
-
                 next();
             });
         } catch (error) {

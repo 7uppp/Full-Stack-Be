@@ -19,6 +19,8 @@ import * as fetchLatestTenPostsController from '../../controllers/fetchAllPostsC
 import * as getUserInfoController from '../../controllers/getUserInfoController';
 import * as uploadUserAvatarMiddleware from '../../controllers/uploadUserAvatarMiddleware';
 import * as userOperateController from '../../controllers/userOperateController';
+import getUserAvatar from "../../controllers/getUserAvatar";
+
 
 
 
@@ -45,6 +47,8 @@ router.use('/auth', authMiddleware, subRouter);
 
 //router for create post
 subRouter.post('/posts', createPostValidation.PostRules, createPostController.createPostController);
+
+subRouter.get('/getUserAvatar/:userId', getUserAvatar);
 
 //router for add comment for a post
 subRouter.post('/posts/:postId/comments', commentValidation.CommentRules, commentController.addComment);

@@ -1,8 +1,6 @@
 import jwt from 'jsonwebtoken'
-import {Request, Response, NextFunction} from 'express';
-import {refreshToken} from "./refreshTokenController";
+import {Request, Response,} from 'express';
 import config from '../config/config';
-
 
 export const getUserInfo = (req: Request, res: Response) => {
 
@@ -22,10 +20,9 @@ export const getUserInfo = (req: Request, res: Response) => {
 
         if (err) return res.status(403).json({message: 'Invalid access token'});
 
-
        // console.log ('user:',user);
         return res.status(200).json({user: user});
-    })
 
+    })
 
 };
