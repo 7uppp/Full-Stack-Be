@@ -1,8 +1,8 @@
-import dbConnection from "../../loader/dbConnect";
 import {Request,Response} from "express";
 import {RowDataPacket} from "mysql2";
 import {GetObjectCommand, S3Client} from "@aws-sdk/client-s3";
 import {getSignedUrl} from "@aws-sdk/s3-request-presigner";
+import QueryDatabase from  "../../utils/queryDatabase";
 import dotenv from "dotenv";
 dotenv.config()
 
@@ -15,21 +15,13 @@ const extractKeyFromS3URL = (url: string) => {
     return path.startsWith("/") ? path.slice(1) : path;
 };
 
-const queryDatabase = (query: string, values: any[]): Promise<RowDataPacket[]> => {
-    return new Promise((resolve, reject) => {
-        dbConnection.query(query, values, (err, results: RowDataPacket[]) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(results);
-            }
-        });
-    });
-};
+
+
+
 
 const getUserAvatar = async (req: RequestWithUserId, res: Response) => {
     try {
-        const results: RowDataPacket[] = await queryDatabase(`SELECT avatarUrl FROM userinfo WHERE id = ?`, [req.userId]);
+        const results: RowDataPacket[] = await QueryDatabase(`SELECT avatarUrl FROM userinfo WHERE id = ?`, [req.userId]);
 
         if (results.length === 0) {
             return res.status(404).send({message: 'User not found'});

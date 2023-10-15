@@ -1,10 +1,10 @@
 import {Request, Response} from 'express';
-import dbConnection from "../../loader/dbConnect";
 import {MulterError} from "multer";
 import {S3Client, GetObjectCommand} from '@aws-sdk/client-s3';
 import {getSignedUrl} from '@aws-sdk/s3-request-presigner';
 import {RowDataPacket} from 'mysql2';
 import {deleteFromS3} from "./uploadUserAvatarMiddleware";
+import QueryDatabase from "../../utils/queryDatabase";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -14,15 +14,6 @@ interface MulterRequest extends Request {
     multerError?: MulterError;
 }
 
-// Convert callback-based query to a Promise-based one
-const queryAsync = (query: string, values?: any[]): Promise<RowDataPacket[]> => {
-    return new Promise<RowDataPacket[]>((resolve, reject) => {
-        dbConnection.query(query, values, (err, results) => {
-            if (err) reject(err);
-            else resolve(results as RowDataPacket[]);
-        });
-    });
-};
 
 const checkForMulterErrors = (req: MulterRequest, res: Response): boolean => {
     if (!req.file || !req.file.location) {
@@ -48,11 +39,11 @@ const updateAvatarInDB = async (userId: number, newAvatarUrl: string): Promise<s
     const updateAvatarQuery = `UPDATE userinfo SET avatarUrl = ? WHERE id = ?`;
 
     // Fetch old avatar key
-    const results = await queryAsync(fetchAvatarQuery, [userId]);
+    const results = await QueryDatabase(fetchAvatarQuery, [userId]);
     const oldAvatarKey = results[0]?.avatarUrl || null;
 
     // Update with new avatar
-    await queryAsync(updateAvatarQuery, [newAvatarUrl, userId]);
+    await QueryDatabase(updateAvatarQuery, [newAvatarUrl, userId]);
 
     return oldAvatarKey;
 };
