@@ -10,7 +10,7 @@ import * as getOnePostValidation from '../../Validation/getOnePost';
 import authMiddleware from '../../middleware/authMiddleware';
 import * as refreshTokenController from '../../controllers/refreshTokenController';
 import * as commentController from '../../controllers/addCommentController';
-import * as fetchAllPostsController from '../../controllers/fetchPostAllCommentController';
+import * as fetchAllCommentController from '../../controllers/fetchPostAllCommentController';
 import * as createPostController from '../../controllers/createPostController';
 import * as createPostValidation from '../../Validation/postsRules';
 import * as deleteCommentController from '../../controllers/deleteCommentController';
@@ -22,8 +22,6 @@ import * as userOperateController from '../../controllers/userOperateController'
 import getUserAvatar from "../../controllers/getUserAvatar";
 
 
-
-
 //**************All routers which don't need authMiddleware **************//
 // router for register
 router.post('/register', registerValidation.RegisterRules, registerController.register);
@@ -32,15 +30,21 @@ router.post('/register', registerValidation.RegisterRules, registerController.re
 router.post('/login', loginValidation.LoginRules, loginController.login);
 
 //router for fetch latest 10 posts
-router.get('/posts', fetchLatestTenPostsController.fetchAllPosts);
+router.get('/posts', fetchLatestTenPostsController.fetchLatestTenPosts);
 
 // router for refresh token
 router.post('/refreshToken', refreshTokenController.refreshToken);
 
+//router for get user info
+
 router.post('/getUserInfo', getUserInfoController.getUserInfo);
 
 //router for fetch all comments for a post
-router.get('/posts/:postId/comments', getOnePostValidation.GetOnePost, fetchAllPostsController.fetchAllCommentsForPost);
+router.get('/posts/:postId/comments', getOnePostValidation.GetOnePost, fetchAllCommentController.fetchAllCommentsForPost);
+
+//router for fetch one post
+router.get('/posts/:postId', getOnePostValidation.GetOnePost, );
+
 //**************All routers which need authMiddleware **************//
 
 router.use('/auth', authMiddleware, subRouter);
